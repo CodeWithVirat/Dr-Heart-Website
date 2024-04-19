@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Attack Test Results</title>
+    <link rel="stylesheet" href="test_styles.css">
+    <!-- Add Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        section {
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: calc(100% - 20px);
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            border-color: #007bff;
+        }
+
+        button {
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f8d7da;
+            color: #721c24;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .normal-range {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .normal-range h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .normal-range ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .normal-range li {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        /* Smaller graphs */
+        .graph-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 400px; /* Reduce the max-width */
+            margin: auto;
+        }
+
+        .graph-container canvas {
+            max-width: 180px; /* Reduce the max-width */
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Heart Attack Test Results</h1>
+        </header>
+
+        <section>
+            <h2>Your Health Status</h2>
+            <div class="graph-container">
+                <canvas id="bloodPressureChart"></canvas>
+                <canvas id="cholesterolChart"></canvas>
+            </div>
+            <div class="health-info">
+                <h3>Interpretation:</h3>
+                <p id="interpretationText">Interpretation will be displayed here based on your test results.</p>
+                <h3>Managing Your Health:</h3>
+                <p id="managementText">Management recommendations will be displayed here based on your test results.</p>
+            </div>
+        </section>
+
+        <section class="normal-range">
+            <h3>Normal Ranges</h3>
+            <ul>
+                <li><strong>Blood Pressure:</strong> Less than 120/80 mmHg</li>
+                <li><strong>Cholesterol:</strong> Less than 200 mg/dL</li>
+                <li><strong>Diabetes (Blood Sugar Level):</strong> Fasting blood sugar less than 100 mg/dL</li>
+                <li><strong>Heart Rate:</strong> Between 60 and 100 beats per minute (BPM)</li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- JavaScript for rendering charts -->
+    <script>
+        // Actual data for blood pressure and cholesterol (replace with accurate data)
+        const bloodPressureData = [120, 130, 125, 140, 135]; // Sample blood pressure data
+        const cholesterolData = [200, 190, 180, 210, 195]; // Sample cholesterol data
+
+        // Function to render blood pressure chart
+        function renderBloodPressureChart() {
+            new Chart(document.getElementById('bloodPressureChart').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                    datasets: [{
+                        label: 'Blood Pressure (mmHg)',
+                        data: bloodPressureData,
+                        borderColor: 'blue',
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        // Function to render cholesterol chart
+        function renderCholesterolChart() {
+            new Chart(document.getElementById('cholesterolChart').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                    datasets: [{
+                        label: 'Cholesterol Level (mg/dL)',
+                        data: cholesterolData,
+                        borderColor: 'green',
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        // Function to interpret the filled data
+        function interpretData() {
+            // Retrieve and analyze the filled data (replace with actual logic)
+            const bloodPressure = bloodPressureData[bloodPressureData.length - 1]; // Get the latest blood pressure value
+            const cholesterol = cholesterolData[cholesterolData.length - 1]; // Get the latest cholesterol value
+
+            // Interpretation logic
+            let interpretation = "";
+            if (bloodPressure < 120 && cholesterol < 200) {
+                interpretation = "Your blood pressure and cholesterol levels are within the normal range. Keep up the good work!";
+            } else {
+                interpretation = "Your blood pressure or cholesterol levels are higher than normal. It's essential to monitor them closely and consult a healthcare professional for further advice.";
+            }
+
+            // Display interpretation
+            document.getElementById("interpretationText").textContent = interpretation;
+
+            // Update management recommendations based on interpretation
+            let management = "";
+            if (interpretation.includes("normal range")) {
+                management = "Continue maintaining a healthy lifestyle with balanced diet and regular exercise.";
+            } else {
+                management = "Consult with a healthcare professional to develop a personalized plan for managing your blood pressure and cholesterol levels.";
+            }
+
+            // Display management recommendations
+            document.getElementById("managementText").textContent = management;
+        }
+
+        // Call functions to render charts, interpret data, and display normal ranges
+        renderBloodPressureChart();
+        renderCholesterolChart();
+        interpretData();
+    </script>
+</body>
+</html>

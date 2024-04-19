@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Attack Prediction Dashboard</title>
+    <link rel="stylesheet" href="dashboard_styles.css">
+</head>
+<body>
+    <header>
+        <h1>Heart Attack Prediction Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Notifications</a></li>
+                <li><a href="#">Help</a></li>
+                <li><a href="#" onclick="openTestPage()">Run a Test Now</a></li>
+                <!-- Updated onclick attribute -->
+            </ul>
+        </nav>
+    </header>
+
+    <section class="graphs-and-info">
+        <!-- Interactive charts and information go here -->
+        <div class="charts">
+            <!-- Heart Disease Prediction Charts -->
+            <h2>Heart Disease Prediction Charts</h2>
+            <!-- Example chart placeholders -->
+            <canvas id="criticalChart" width="200" height="150"></canvas>
+            <canvas id="normalChart" width="200" height="150"></canvas>
+        </div>
+
+        <div class="info">
+            <!-- Additional information -->
+            <h2>Health Summary</h2>
+            <p><strong>Body Mass Index (BMI) Changes:</strong> Over the past five weeks, the patient's BMI has shown a steady decrease, indicating improved weight management and overall health.</p>
+            <p><strong>Exercise Benefits:</strong> Regular physical activity has contributed to the patient's cardiovascular health, reducing the risk of heart disease and improving overall fitness levels.</p>
+            <p><strong>Fitness Assessment:</strong> Based on the data collected, the patient is currently in good health, with notable improvements in BMI and cardiovascular fitness.</p>
+        </div>
+
+        <div class="test-button">
+            <!-- Run a Test Now button -->
+            <button onclick="openTestPage()">Run a Test Now</button>
+        </div>
+    </section>
+
+    <section class="data-table">
+        <!-- Data table goes here -->
+        <h2>Patient Data Table</h2>
+        <!-- Example data table -->
+        <div class="table-toolbar">
+            <input type="text" id="searchInput" placeholder="Search...">
+            <select id="filterDropdown">
+                <option value="">Filter by...</option>
+                <option value="age">Age</option>
+                <option value="gender">Gender</option>
+                <option value="condition">Condition</option>
+            </select>
+            <button id="sortButton">Sort</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Condition</th>
+                    <th>Last Checked Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table rows with patient data -->
+                <tr>
+                    <td>1</td>
+                    <td>Sachin</td>
+                    <td>45</td>
+                    <td>Male</td>
+                    <td>Stable</td>
+                    <td>2023-12-15</td> <!-- Example date -->
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Virat</td>
+                    <td>25</td>
+                    <td>Male</td>
+                    <td>Normal</td>
+                    <td>2023-11-15</td> <!-- Example date -->
+                </tr>
+                <!-- Additional rows -->
+            </tbody>
+        </table>
+    </section>
+
+    <aside class="profile-section">
+        <!-- User profile section goes here -->
+        <h2>User Profile</h2>
+        <!-- Updated profile information -->
+        <div class="profile-info">
+            <p><strong>Name:</strong> Virat</p>
+            <p><strong>Email:</strong> viratjob34@gmail.com</p>
+            <p><strong>Role:</strong> Administrator</p>
+        </div>
+        <!-- Profile management links -->
+        <div class="profile-links">
+            <a href="#">Edit Profile</a>
+            <a href="#">Change Password</a>
+        </div>
+    </aside>
+
+    <section class="alerts-section">
+        <!-- Alerts and notifications go here -->
+        <h2>Alerts & Notifications</h2>
+        <!-- Example alerts -->
+        <div class="alert">
+            <p><strong>Alert:</strong> New patient data received.</p>
+        </div>
+        <!-- Additional alerts -->
+    </section>
+
+    <footer>
+        <!-- Footer content with help and support links -->
+        <p>Need help? Contact support at <a href="mailto:support@example.com">support@example.com</a></p>
+        <p>Explore our <a href="#">FAQs</a> for assistance</p>
+    </footer>
+    
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // Data for the charts (replace with actual data)
+        const criticalData = [10, 20, 30, 40, 50]; // Example critical data
+        const normalData = [50, 40, 30, 20, 10]; // Example normal data
+
+        // Function to run a test
+        function runTest() {
+            alert("Running test..."); // Replace with actual test logic
+        }
+
+        // Function to open the test page in a new window
+        function openTestPage() {
+            const testWindow = window.open('test.html', '_blank');
+            testWindow.focus();
+        }
+
+        // Create and render the critical state chart
+        new Chart(document.getElementById('criticalChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'], // Example labels
+                datasets: [{
+                    label: 'Critical State',
+                    data: criticalData,
+                    borderColor: 'red',
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false
+            }
+        });
+
+        // Create and render the normal state chart
+        new Chart(document.getElementById('normalChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'], // Example labels
+                datasets: [{
+                    label: 'Normal State',
+                    data: normalData,
+                    borderColor: 'green',
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false
+            }
+        });
+    </script>
+</body>
+</html>
